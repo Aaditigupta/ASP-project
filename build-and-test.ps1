@@ -1,5 +1,5 @@
 #!/usr/bin/env pwsh
-//
+
 param(
     # Version of .NET Core to filter by
     [string]$VersionFilter = "*",
