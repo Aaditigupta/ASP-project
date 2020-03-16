@@ -3,17 +3,32 @@ pipeline {
  stages {
   stage('Checkout') {
    steps {
-    git 'https://github.com/dotnet/dotnet-docker'
+    git 'https://github.com/Aaditigupta/Asp-project.git'
    }
   }
- stage('Clean') {
+   stage('Clean') {
    steps {
     dir("/var/lib/jenkins/workspace/ASPproject/samples/aspnetapp/aspnetapp/")
     {
-     sh 'sudo dotnet clean'
+     sh 'dotnet clean'
    }
    }
   }
+   stage('Sonar Analysis'){
+      steps{
+          dir("/var/lib/jenkins/workspace/ASPproject/samples/aspnetapp/aspnetapp/"){
+   //       withSonarQubeEnv('sonarqube'){
+          sh 'sonar-scanner \
+          -Dsonar.organization=aaditigupta \
+          -Dsonar.projectKey=Aaditigupta_Asp-project \
+          -Dsonar.sources=. \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.login=d063c340ec1b0a24a2cf9fa934710e7381daf6b2'
+      }}
+//      }
+  }
+
+ 
    stage('Build') {
    steps {
     dir("/var/lib/jenkins/workspace/ASPproject/samples/aspnetapp/aspnetapp/")
